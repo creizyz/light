@@ -14,11 +14,11 @@ This section explains how to setup this project in your environment.
 
 This CXX project uses ***cmake*** as a build orchestrator and requires a ***C++20 compatible compiler***. At this stage, the following compilers were tested:
 
-[X] gcc-11.2 (msys2)
-[ ] gcc-11.2 (linux)
-[ ] MSVC 17+
-[ ] clang
-[ ] intel compiler
+- [X] gcc-11.2 (msys2)
+- [ ] gcc-11.2 (linux)
+- [ ] MSVC 17+
+- [ ] clang
+- [ ] intel compiler
 
 ### Dependencies
 
