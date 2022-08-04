@@ -45,10 +45,3 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # ================================================== # Targets
 
 add_subdirectory(source)
-
-if(EXISTS test)
-	option(BUILD_TESTS "Build tests for ${PROJECT_NAME}" ON)
-	if(BUILD_TESTS)
-		add_subdirectory(test)
-	endif()
-endif()
