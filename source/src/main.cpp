@@ -1,6 +1,10 @@
 #include <iostream>
 
-#include "core/core.hpp"
+#include "core/image/image.hpp"
+#include "core/optics/material.hpp"
+#include "core/optics/shape.hpp"
+#include "core/io/image/ppm-io.hpp"
+
 #include "renderer/shape-list.hpp"
 #include "renderer/sphere.hpp"
 #include "renderer/camera.hpp"

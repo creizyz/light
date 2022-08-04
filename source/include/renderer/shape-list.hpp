@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/core.hpp"
+#include "core/optics/shape.hpp"
 
 #include <memory>
 #include <vector>
