@@ -34,7 +34,7 @@ set(PROJECT_PATCH_VERSION ${${PROJECT_NAME}_PATCH_VERSION})
 set(PROJECT_GIT_REVISION  ${${PROJECT_NAME}_GIT_REVISION})
 set(PROJECT_GIT_BRANCH    ${${PROJECT_NAME}_GIT_BRANCH})
 
-configure_file(source/version.hpp.in ${CMAKE_BINARY_DIR}/include/version.hpp)
+configure_file(library/version.hpp.in ${CMAKE_BINARY_DIR}/include/version.hpp)
 
 # ================================================================== #
 # ================================================== # External Modules
@@ -44,4 +44,6 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 # ================================================================== #
 # ================================================== # Targets
 
-add_subdirectory(source)
+add_subdirectory(library)
+add_subdirectory(client)
+add_subdirectory(test)

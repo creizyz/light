@@ -1,27 +1,27 @@
 # ================================================================== #
 # ================================================== # Target
 
-set(APP_TARGET light)
+set(LIB_TARGET light)
 
 file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS include/*.hpp ${CMAKE_BINARY_DIR}/include/*.hpp)
 file(GLOB_RECURSE PRIVATE_HEADERS CONFIGURE_DEPENDS src/*.hpp)
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
 
-add_executable(${APP_TARGET} ${HEADERS} ${PRIVATE_HEADERS} ${SOURCES})
-set_target_properties(${APP_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
-target_compile_features(${APP_TARGET} PRIVATE cxx_std_20)
+add_library(${LIB_TARGET} ${HEADERS} ${PRIVATE_HEADERS} ${SOURCES})
+set_target_properties(${LIB_TARGET} PROPERTIES LINKER_LANGUAGE CXX)
+target_compile_features(${LIB_TARGET} PRIVATE cxx_std_20)
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-	# target_compile_options(${APP_TARGET} ... )
+	# target_compile_options(${LIB_TARGET} ... )
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
-	target_compile_options(${APP_TARGET} PRIVATE -W -Wall -Wextra -Werror -pedantic)
+	target_compile_options(${LIB_TARGET} PRIVATE -W -Wall -Wextra -Werror -pedantic)
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-	# target_compile_options(${APP_TARGET} ... )
+	# target_compile_options(${LIB_TARGET} ... )
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "MSVC")
-	target_compile_options(${APP_TARGET} PRIVATE /W4 /WX)
+	target_compile_options(${LIB_TARGET} PRIVATE /W4 /WX)
 endif()
 
-target_include_directories(${APP_TARGET}
+target_include_directories(${LIB_TARGET}
 	PUBLIC
 		$<INSTALL_INTERFACE:include>
 		$<INSTALL_INTERFACE:include>
@@ -35,28 +35,28 @@ target_include_directories(${APP_TARGET}
 # ================================================== # Dependencies
 
 # find_package(...)
-# target_link_libraries(${APP_TARGET} ...)
-# target_include_directories(${APP_TARGET} ...)
+# target_link_libraries(${LIB_TARGET} ...)
+# target_include_directories(${LIB_TARGET} ...)
 
 # ================================================================== #
 # ================================================== # Installation
 
 INSTALL (
 	DIRECTORY ${CMAKE_BINARY_DIR}/include
-	DESTINATION include/${APP_TARGET}
+	DESTINATION include/${LIB_TARGET}
 	FILES_MATCHING PATTERN "*.hpp"
 )
 INSTALL (
 	DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include
-	DESTINATION include/${APP_TARGET}
+	DESTINATION include/${LIB_TARGET}
 	FILES_MATCHING PATTERN "*.hpp"
 )
 install(
-	TARGETS ${APP_TARGET} EXPORT ${PROJECT_NAME}Targets
+	TARGETS ${LIB_TARGET} EXPORT ${PROJECT_NAME}Targets
 	LIBRARY       DESTINATION lib
 	ARCHIVE       DESTINATION lib
 	RUNTIME       DESTINATION bin
-	INCLUDES      DESTINATION include/${APP_TARGET}
+	INCLUDES      DESTINATION include/${LIB_TARGET}
 )
 
 # ================================================================== #
@@ -65,7 +65,7 @@ install(
 include(CMakePackageConfigHelpers)
 
 set(CONF_INSTALL_DIR  "${CMAKE_INSTALL_PREFIX}/lib/cmake/${PROJECT_NAME}")
-set(CONF_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include/${APP_TARGET}")
+set(CONF_INCLUDE_DIRS "${CMAKE_INSTALL_PREFIX}/include/${LIB_TARGET}")
 
 configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/PackageConfig.cmake.in
 	${PROJECT_BINARY_DIR}/to_install/${PROJECT_NAME}Config.cmake
