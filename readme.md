@@ -2,7 +2,7 @@
 
 ## Overview
 
-**[ TODO ]** Write a brief introduction to the project and the library here.
+This is a toy project aimed at improving my coding skills while learning computer graphics techniques.
 
 *Note : this project was kickstarted using the [cxx-project-template](https://github.com/creizyz/cxx-project-template) project.*
 
@@ -13,15 +13,16 @@ This section explains how to setup this project in your environment.
 ### Development Environment
 
 This CXX project uses ***cmake*** as a build orchestrator and requires a ***C++20 compatible compiler***. At this stage, the following compilers were tested:
-- ***gcc-10+ (msys2)*** : OK
-- ***gcc-10+ (linux)*** : UNKNOWN
-- ***MSVC 17+*** : UNKNOWN
-- ***clang*** : UNKNOWN
-- ***intel compiler*** : UNKNOWN
+
+[X] gcc-11.2 (msys2)
+[ ] gcc-11.2 (linux)
+[ ] MSVC 17+
+[ ] clang
+[ ] intel compiler
 
 ### Dependencies
 
-**[ TODO ]** Declare your dependencies here
+This project has no dependencies yet. Since the aim of this project is solely to improve my computer science and computer graphics skills, the dependencies may be kept to the minimum.
 
 ### Cmake Presets
 
