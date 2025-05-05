@@ -1,13 +1,14 @@
-#include <light.hpp>
+#include "light.hpp"
 
-namespace light {
+namespace light
+{
+    Light::Light()
+    {
+        number = 6;
+    }
 
-Light::Light() {
-    number = 6;
-}
-
-int Light::get_number() const {
-  return number;
-}
-
+    int Light::get_number() const
+    {
+        return number;
+    }
 }

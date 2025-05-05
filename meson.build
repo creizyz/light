@@ -11,7 +11,9 @@ project('light', 'cpp',
 light_lib = static_library(
   'light',
   sources: [
+    'include/erased.hpp',
     'include/light.hpp',
+    'include/news.hpp',
     'src/light.cpp',
   ],
   include_directories: include_directories('include', 'src')
@@ -28,13 +30,18 @@ pkg = pkgconfig.generate(
   subdirs: ['src', 'include']
 )
 
+# Dependency for Catch2
+catch2_dep = dependency('catch2-with-main', required: true, method: 'pkg-config')
+
 # Declare a tests project
 test_exe = executable(
   'tests',
   sources: [
-    'tests/light.cpp'
+    'tests/erased.cpp',
+    'tests/light.cpp',
   ],
-  link_with : light_lib,
+  link_with: [light_lib],
+  dependencies: [catch2_dep],
   include_directories: include_directories('include')
 )
 test('light', test_exe)
