@@ -7,8 +7,8 @@ namespace light
 {
     class erased_ptr
     {
-        std::shared_ptr<void> data{ nullptr };
-        std::type_index       type{ typeid(void) };
+        std::shared_ptr<void> _data{ nullptr };
+        std::type_index       _type{ typeid(void) };
 
     public:
         erased_ptr() = delete;
@@ -33,10 +33,10 @@ namespace light
          * @param other The erased_ptr instance to move from.
          */
         erased_ptr(erased_ptr && other) noexcept
-            : data{ std::move(other.data) }
-            , type{ other.type }
+            : _data{ std::move(other._data) }
+            , _type{ other._type }
         {
-            other.type = typeid(void);
+            other._type = typeid(void);
         }
 
         /**
@@ -63,9 +63,9 @@ namespace light
          */
         erased_ptr & operator=(erased_ptr && other) noexcept
         {
-            data = std::move(other.data);
-            type = other.type;
-            other.type = typeid(void);
+            _data = std::move(other._data);
+            _type = other._type;
+            other._type = typeid(void);
             return *this;
         }
 
@@ -85,8 +85,8 @@ namespace light
          */
         template <typename T>
         explicit erased_ptr(std::unique_ptr<T> && ptr)
-            : data{ static_cast<void*>(ptr.release()), [](void * p) { delete static_cast<T*>(p); } }
-            , type{ typeid(T) }
+            : _data{ static_cast<void*>(ptr.release()), [](void * p) { delete static_cast<T*>(p); } }
+            , _type{ typeid(T) }
         { }
 
         /**
@@ -105,8 +105,8 @@ namespace light
          */
         template <typename T>
         explicit erased_ptr(T * ptr)
-            : data{ static_cast<void*>(ptr), [](void * p) { delete static_cast<T*>(p); } }
-            , type{ typeid(T) }
+            : _data{ static_cast<void*>(ptr), [](void * p) { delete static_cast<T*>(p); } }
+            , _type{ typeid(T) }
         { }
 
         /**
@@ -123,12 +123,12 @@ namespace light
         template <typename T>
         T & get()
         {
-            if (type != typeid(T))
+            if (_type != typeid(T))
             {
                 throw std::bad_cast();
             }
 
-            return *static_cast<T *>(data.get());
+            return *static_cast<T *>(_data.get());
         }
 
         /**
@@ -145,12 +145,12 @@ namespace light
         template <typename T>
         const T & get() const
         {
-            if (type != typeid(T))
+            if (_type != typeid(T))
             {
                 throw std::bad_cast();
             }
 
-            return *static_cast<const T *>(data.get());
+            return *static_cast<const T *>(_data.get());
         }
 
         /**
@@ -165,8 +165,8 @@ namespace light
          */
         inline void reset()
         {
-            data.reset();
-            type = typeid(void);
+            _data.reset();
+            _type = typeid(void);
         }
 
         /**
@@ -190,8 +190,8 @@ namespace light
         template <typename T>
         void reset(T * ptr)
         {
-            data.reset(static_cast<void*>(ptr), [](void * p) { delete static_cast<T*>(p); });
-            type = typeid(T);
+            _data.reset(static_cast<void*>(ptr), [](void * p) { delete static_cast<T*>(p); });
+            _type = typeid(T);
         }
 
     public:
@@ -231,8 +231,8 @@ namespace light
      */
     inline void swap(erased_ptr & lhs, erased_ptr & rhs ) noexcept
     {
-        std::swap(lhs.data, rhs.data);
-        std::swap(lhs.type, rhs.type);
+        std::swap(lhs._data, rhs._data);
+        std::swap(lhs._type, rhs._type);
     }
 
 }
