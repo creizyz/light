@@ -1,5 +1,5 @@
 project('light', 'cpp',
-  version : '0.1',
+  version : '0.0.1',
   default_options : [
     'warning_level=3', # -Wall -Wextra
     'werror=true',
@@ -7,16 +7,41 @@ project('light', 'cpp',
   ]
 )
 
+# Parse version into components
+version = meson.project_version()
+version_split = version.split('.')
+
+# Obtain Git commit hash using `run_command`
+git_cmd = run_command('git', 'rev-parse', '--short', 'HEAD')
+commit_hash = git_cmd.stdout().strip()
+
+# Configure header file with version info
+version_header = configure_file(
+  input : 'version.hpp.in',
+  output : 'version.hpp',
+  configuration : {
+    'VERSION'       : version,
+    'VERSION_MAJOR' : version_split[0],
+    'VERSION_MINOR' : version_split.length() > 1 ? version_split[1] : 0,
+    'VERSION_PATCH' : version_split.length() > 2 ? version_split[2] : 0,
+    'COMMIT_HASH'   : commit_hash,
+  }
+)
+
 # Declare project
 light_lib = static_library(
   'light',
   sources: [
+    version_header,
     'include/erased.hpp',
     'include/light.hpp',
     'include/news.hpp',
     'src/light.cpp',
   ],
-  include_directories: include_directories('include', 'src')
+  include_directories: include_directories(
+    'include',
+    'src',
+  )
 )
 
 # Generate pkg-config file
